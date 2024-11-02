@@ -53,6 +53,13 @@
         <div v-for="section in sections" :key="section.id">
             <div v-if="currentSection === section.id" class="section">
                 <h2>{{ section.name }}</h2>
+                <img :src="section.img" alt="" width="50%">
+                <video 
+                :src="section.video" 
+                controls 
+                ref="videos"
+                :key="section.id" 
+                ></video>
                 <p>{{ section.content }}</p>
             </div>
         </div>
@@ -65,13 +72,26 @@
                 // Estado del menú
                 currentSection: 1, // Empieza en la primera sección
                 sections: [
-                    { id: 1, name: 'Inicio', content: 'Bienvenido a la sección de Inicio.' },
-                    { id: 2, name: 'Servicios', content: 'Aquí te explicamos nuestros servicios.' },
-                    { id: 3, name: 'Sobre Nosotros', content: 'Conoce nuestra historia y misión.' },
-                    { id: 4, name: 'Contacto', content: 'Ponte en contacto con nosotros.' }
+                    { id: 1, name: 'Inicio', img: 'https://plus.unsplash.com/premium_photo-1697477565728-d54c716b51d4', content: 'Bienvenido a la sección de Inicio.', video: 'https://www.w3schools.com/html/mov_bbb.mp4' },
+                    { id: 2, name: 'Servicios', img: 'https://images.unsplash.com/photo-1730510275308-8475fc93a515', content: 'Aquí te explicamos nuestros servicios.', video: 'https://www.w3schools.com/html/movie.mp4'  },
+                    { id: 3, name: 'Sobre Nosotros', img: 'https://images.unsplash.com/photo-1728348679230-9c3dd60251e9', content: 'Conoce nuestra historia y misión.', video: 'https://www.w3schools.com/html/mov_bbb.mp4'  },
+                    { id: 4, name: 'Contacto', img: 'https://images.unsplash.com/photo-1719937206255-cc337bccfc7d', content: 'Ponte en contacto con nosotros.', video: 'https://www.w3schools.com/html/movie.mp4'  }
                 ]
                 };
+            },
+            methods: {
+                // Método para cambiar de sección y pausar todos los videos
+                changeSection(newSectionId) {
+                this.pauseAllVideos(); // Pausa todos los videos al cambiar de sección
+                this.currentSection = newSectionId; // Cambia a la nueva sección
+            },
+                // Método para pausar todos los videos usando referencias
+                pauseAllVideos() {
+                this.$refs.videos.forEach(video => {
+                    video.pause();
+            });
             }
+        }
         }).mount('#app');
     </script>
 </body>
