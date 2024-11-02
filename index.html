@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+
+    <style>
+        
+        body { 
+            font-family: Arial, sans-serif; 
+        }
+        .menu { 
+            display: flex; 
+            gap: 20px; 
+            background: #333; 
+            padding: 10px; 
+        }
+            .menu a { 
+                color: white; 
+                cursor: pointer; 
+            }
+            .menu a.active { 
+                font-weight: bold; 
+                color: #f0a500; 
+            }
+        .section { 
+            padding: 20px; 
+        }
+    </style>
+
+</head>
+<body>
+    <div id="app">
+        
+        <header>
+          <h1>Mi Página con Vue.js</h1>
+        </header>    
+       
+        <nav class="menu">
+            <a 
+                v-for="section in sections" 
+                :key="section.id" 
+                :class="{ active: currentSection === section.id }" 
+                @click="currentSection = section.id"
+            >
+            {{ section.name }}
+            </a>
+        </nav>    
+        
+        <div v-for="section in sections" :key="section.id">
+            <div v-if="currentSection === section.id" class="section">
+                <h2>{{ section.name }}</h2>
+                <p>{{ section.content }}</p>
+            </div>
+        </div>
+    </div>
+
+    <script>        
+        Vue.createApp({
+            data() {
+                return {
+                // Estado del menú
+                currentSection: 1, // Empieza en la primera sección
+                sections: [
+                    { id: 1, name: 'Inicio', content: 'Bienvenido a la sección de Inicio.' },
+                    { id: 2, name: 'Servicios', content: 'Aquí te explicamos nuestros servicios.' },
+                    { id: 3, name: 'Sobre Nosotros', content: 'Conoce nuestra historia y misión.' },
+                    { id: 4, name: 'Contacto', content: 'Ponte en contacto con nosotros.' }
+                ]
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
